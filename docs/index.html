@@ -652,6 +652,11 @@
       renderLoading();
       loadDomainShard(node._domain).then(function(shard){
         renderLeafDetail(node, shard[node.i]);
+      }).catch(function(err){
+        detailEl.innerHTML = '<div class="breadcrumb">' + breadcrumbHTML(node) + '</div>' +
+          '<p class="lede-muted" style="color:var(--bad);">Could not load detail data (' + esc(err.message) +
+          '). If you opened this file directly from disk, serve it from a local web server instead (e.g. <code>npx serve .</code> or <code>python -m http.server</code>) — browsers block fetching local JSON files over file://.</p>';
+        attachBreadcrumbHandlers();
       });
     } else {
       renderBranchDetail(node);
